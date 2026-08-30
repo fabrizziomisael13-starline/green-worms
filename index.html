@@ -3,60 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Worms | Plantas y Asesoría Botánica</title>
+  <title>Green Worms | Plantas, Insumos y Asesoría Botánica</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Encabezado y Navegación -->
+  <!-- Barra de Navegación -->
   <header>
     <nav class="navbar">
       <h1 class="logo">Green Worms 🪱🌱</h1>
       <ul>
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#asistente">Asistente IA</a></li>
         <li><a href="#contacto">Contacto</a></li>
-        <li><a href="admin.html">Admin</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Sección de Inicio -->
+  <!-- Banner Principal (Hero) -->
   <section id="inicio" class="hero">
-    <h2>Bienvenidos a Green Worms</h2>
-    <p>Los mejores productos y servicios al alcance de un clic.</p>
-    <a href="#catalogo" class="btn">Ver Catálogo</a>
+    <h2>Green Worms te da la bienvenida</h2>
+    <p>Todo lo esencial acerca de la jardinería lo encontrarás aquí</p>
+    <a href="#catalogo" class="btn">Explorar Catálogo</a>
   </section>
 
-  <!-- Sección Catálogo -->
-  <section id="catalogo" class="contenedor">
-    <h2>Nuestros Productos</h2>
-    <div id="grid-productos" class="grid">
-      <!-- Los productos se cargarán dinámicamente desde JS -->
-    </div>
-  </section>
+  <main class="contenedor">
+    <!-- Sección Catálogo -->
+    <section id="catalogo">
+      <h2>Nuestro Catálogo Botánico</h2>
+      <div id="grid-productos" class="grid">
+        <!-- Productos cargados dinámicamente desde script.js -->
+      </div>
+    </section>
 
-  <!-- Sección Contacto -->
-  <section id="contacto" class="contenedor">
-    <h2>Contáctanos</h2>
-    <form id="formulario-contacto">
-      <input type="text" id="nombre" placeholder="Tu Nombre" required>
-      <input type="email" id="email" placeholder="Tu Correo Electrónico" required>
-      <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
-      <button type="submit" class="btn">Enviar Mensaje</button>
-    </form>
-    <p id="respuesta-form"></p>
-  </section>
+    <!-- Sección Asistente Inteligente -->
+    <section id="asistente" style="margin-top: 60px;">
+      <h2>Consulta a nuestra IA Botánica 🤖🌱</h2>
+      <div class="chat-container">
+        <div id="respuesta-ia" class="respuesta-box">
+          <div class="mensaje-bot">🤖 ¡Hola! Soy tu asistente de Green Worms. ¿En qué puedo ayudarte hoy con tus plantas, insumos o macetas?</div>
+        </div>
+        <div class="input-chat-group">
+          <input type="text" id="prompt-ia" placeholder="Escribe tu consulta (ej. riego, abono, sustrato, luz, macetas)...">
+          <button id="btn-ia" class="btn">Enviar</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- Asistente de IA -->
-  <section id="ia-assistant" class="contenedor">
-    <h2>Consultas Rápidas (Atención con IA)</h2>
-    <div class="chat-box">
-      <input type="text" id="prompt-ia" placeholder="Pregunta sobre envíos, precios o productos...">
-      <button id="btn-ia" class="btn">Preguntar</button>
-      <div id="respuesta-ia" class="respuesta-box"></div>
-    </div>
-  </section>
+    <!-- Sección Formulario de Contacto -->
+    <section id="contacto" style="margin-top: 60px;">
+      <h2>Contáctanos y Realiza tu Pedido</h2>
+      <!-- Reemplaza TU_ID_FORMSPREE con tu código de Formspree -->
+      <form id="formulario-contacto" action="https://formspree.io/f/mjyvklno" method="POST">
+        <input type="text" name="nombre" id="nombre" placeholder="Tu Nombre Completo" required>
+        <input type="email" name="email" id="email" placeholder="Tu Correo Electrónico" required>
+        <textarea name="mensaje" id="mensaje" rows="4" placeholder="Cuéntanos qué plantas o servicios deseas solicitar..." required></textarea>
+        <button type="submit" class="btn">Enviar Mensaje</button>
+        <p id="respuesta-form"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer style="text-align: center; padding: 25px; background: #1b4332; color: #d8f3dc; margin-top: 50px;">
+    <p>&copy; 2026 Green Worms 🪱🌱 - Cultivando vida en cada rincón.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>

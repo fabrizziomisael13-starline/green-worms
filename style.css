@@ -5,6 +5,10 @@
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   line-height: 1.6;
   color: #2c3e2b;
@@ -19,7 +23,10 @@ body {
   background: #1b4332;
   color: white;
   padding: 1.2rem 2rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
@@ -48,30 +55,31 @@ body {
 /* Banner Principal (Hero) */
 .hero {
   text-align: center;
-  padding: 80px 20px;
+  padding: 90px 20px;
   background: linear-gradient(135deg, #2d6a4f, #1b4332);
   color: white;
   border-bottom: 5px solid #d8f3dc;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .hero h2 {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   margin-bottom: 12px;
   font-weight: 700;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin-bottom: 25px;
   color: #d8f3dc;
-  max-width: 600px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* Contenedores generales */
 .contenedor {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 50px auto;
   padding: 0 20px;
 }
@@ -81,36 +89,95 @@ body {
   margin-bottom: 30px;
   color: #1b4332;
   font-size: 2rem;
+  position: relative;
 }
 
-/* Tarjetas del Catálogo */
+.contenedor h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #40916c;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* Grid del Catálogo */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
 }
 
+/* Tarjetas con Efectos Visuales y Animaciones CSS */
 .card {
   background: white;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 6px 15px rgba(27, 67, 50, 0.06);
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(27, 67, 50, 0.12);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 30px rgba(27, 67, 50, 0.15);
+  border-color: #95d5b2;
+}
+
+.card-img-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+  height: 180px;
+  margin-bottom: 15px;
 }
 
 .card img {
   width: 100%;
-  border-radius: 12px;
-  height: 170px;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 15px;
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card-tag {
+  align-self: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #e8f5e9;
+  color: #2d6a4f;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.card h3 {
+  font-size: 1.15rem;
+  color: #1b4332;
+  margin-bottom: 6px;
+}
+
+.card p.desc {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+.card p.precio {
+  font-weight: 700;
+  color: #1b4332;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 /* Botones Interactivos */
@@ -118,26 +185,82 @@ body {
   display: inline-block;
   background: #40916c;
   color: white;
-  padding: 10px 22px;
+  padding: 10px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
-  transition: background 0.3s ease, transform 0.1s ease;
-  margin-top: 10px;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
 }
 
 .btn:hover {
   background: #2d6a4f;
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
-/* Formulario de Contacto y IA */
-form, .chat-box {
+/* Chatbot Inteligente Estilizado */
+.chat-container {
+  max-width: 650px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(27, 67, 50, 0.08);
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+}
+
+.respuesta-box {
+  height: 280px;
+  overflow-y: auto;
+  padding: 15px;
+  background: #f8faf7;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mensaje-bot, .mensaje-usuario {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  animation: popIn 0.3s ease;
+}
+
+.mensaje-bot {
+  background: #e8f5e9;
+  color: #1b4332;
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.mensaje-usuario {
+  background: #40916c;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.input-chat-group {
+  display: flex;
+  gap: 10px;
+}
+
+.input-chat-group input {
+  flex-grow: 1;
+}
+
+/* Formulario */
+form {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -146,7 +269,7 @@ form, .chat-box {
   background: white;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 6px 15px rgba(27, 67, 50, 0.06);
+  box-shadow: 0 6px 20px rgba(27, 67, 50, 0.08);
   border: 1px solid #e2e8f0;
 }
 
@@ -156,33 +279,23 @@ input, textarea {
   border-radius: 8px;
   font-size: 0.95rem;
   background: #fbfbfb;
+  transition: all 0.3s ease;
 }
 
 input:focus, textarea:focus {
   outline: none;
   border-color: #40916c;
   background: white;
-  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.18);
 }
 
-.chat-box input {
-  width: 100%;
-  margin-bottom: 5px;
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.respuesta-box {
-  margin-top: 15px;
-  padding: 15px;
-  background: #f0f7f4;
-  border-left: 4px solid #40916c;
-  border-radius: 6px;
-  min-height: 45px;
-  font-size: 0.95rem;
-  color: #1b4332;
-}
-
-#respuesta-form {
-  text-align: center;
-  margin-top: 12px;
-  font-weight: 600;
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
