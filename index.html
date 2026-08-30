@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Emprendimiento Digital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Encabezado y Navegación -->
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">MiMarca</h1>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sección de Inicio -->
+  <section id="inicio" class="hero">
+    <h2>Bienvenidos a MiMarca</h2>
+    <p>Los mejores productos y servicios al alcance de un clic.</p>
+    <a href="#catalogo" class="btn">Ver Catálogo</a>
+  </section>
+
+  <!-- Sección Catálogo -->
+  <section id="catalogo" class="contenedor">
+    <h2>Nuestros Productos</h2>
+    <div id="grid-productos" class="grid">
+      <!-- Los productos se cargarán dinámicamente desde JS -->
+    </div>
+  </section>
+
+  <!-- Sección Contacto -->
+  <section id="contacto" class="contenedor">
+    <h2>Contáctanos</h2>
+    <form id="formulario-contacto">
+      <input type="text" id="nombre" placeholder="Tu Nombre" required>
+      <input type="email" id="email" placeholder="Tu Correo Electrónico" required>
+      <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+      <button type="submit" class="btn">Enviar Mensaje</button>
+    </form>
+    <p id="respuesta-form"></p>
+  </section>
+
+  <!-- Asistente de IA -->
+  <section id="ia-assistant" class="contenedor">
+    <h2>Consultas Rápidas (Atención con IA)</h2>
+    <div class="chat-box">
+      <input type="text" id="prompt-ia" placeholder="Pregunta sobre envíos, precios o productos...">
+      <button id="btn-ia" class="btn">Preguntar</button>
+      <div id="respuesta-ia" class="respuesta-box"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
