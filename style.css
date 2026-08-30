@@ -2,174 +2,187 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 body {
   line-height: 1.6;
-  color: #333;
-  background-color: #f8fafc;
+  color: #2c3e2b;
+  background-color: #f7f9f5;
 }
 
-/* Navegación */
+/* Barra de Navegación */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0f172a;
+  background: #1b4332;
   color: white;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 1.2rem 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .navbar ul {
   display: flex;
   list-style: none;
-  gap: 20px;
+  gap: 25px;
 }
 
 .navbar a {
-  color: #f8fafc;
+  color: #e8f5e9;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  color: #38bdf8;
+  color: #95d5b2;
 }
 
-/* Banner Principal */
+/* Banner Principal (Hero) */
 .hero {
   text-align: center;
-  padding: 70px 20px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #2d6a4f, #1b4332);
   color: white;
+  border-bottom: 5px solid #d8f3dc;
 }
 
 .hero h2 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  font-weight: 700;
 }
 
 .hero p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  color: #d8f3dc;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Contenedores */
+/* Contenedores generales */
 .contenedor {
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 50px auto;
   padding: 0 20px;
 }
 
 .contenedor h2 {
   text-align: center;
-  margin-bottom: 25px;
-  color: #1e293b;
+  margin-bottom: 30px;
+  color: #1b4332;
+  font-size: 2rem;
 }
 
-/* Grilla del Catálogo */
+/* Tarjetas del Catálogo */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
+  gap: 30px;
 }
 
 .card {
   background: white;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(27, 67, 50, 0.06);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e2e8f0;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(27, 67, 50, 0.12);
 }
 
 .card img {
-  max-width: 100%;
-  border-radius: 8px;
-  height: 160px;
+  width: 100%;
+  border-radius: 12px;
+  height: 170px;
   object-fit: cover;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
-/* Botones */
+/* Botones Interactivos */
 .btn {
   display: inline-block;
-  background: #2563eb;
+  background: #40916c;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.1s ease;
   margin-top: 10px;
 }
 
 .btn:hover {
-  background: #1d4ed8;
+  background: #2d6a4f;
 }
 
-/* Formulario */
-form {
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Formulario de Contacto y IA */
+form, .chat-box {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto;
   background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(27, 67, 50, 0.06);
+  border: 1px solid #e2e8f0;
 }
 
 input, textarea {
-  padding: 12px;
+  padding: 12px 15px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.95rem;
+  background: #fbfbfb;
 }
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: #2563eb;
-}
-
-/* Chat de IA */
-.chat-box {
+  border-color: #40916c;
   background: white;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15);
 }
 
 .chat-box input {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .respuesta-box {
   margin-top: 15px;
   padding: 15px;
-  background: #f1f5f9;
-  border-left: 4px solid #2563eb;
-  border-radius: 4px;
+  background: #f0f7f4;
+  border-left: 4px solid #40916c;
+  border-radius: 6px;
   min-height: 45px;
   font-size: 0.95rem;
+  color: #1b4332;
 }
 
 #respuesta-form {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: 600;
 }
