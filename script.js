@@ -1,4 +1,4 @@
-// 1. Catálogo Completo con 12 Productos Adaptados a Ecuador (USD)
+// 1. Catálogo 
 const productos = [
   {
     id: 1,
@@ -54,7 +54,7 @@ const productos = [
     categoria: "Planta Mediana",
     precio: "$15.00",
     descripcion: "Planta ornamental destacada por sus hojas en forma de violín. Ideal para salas luminosas.",
-    img: "https://images.unsplash.com/photo-1597055181300-e3633a207519?w=400"
+    img: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=400"
   },
   {
     id: 8,
@@ -102,6 +102,7 @@ const productos = [
 const gridProductos = document.getElementById('grid-productos');
 
 function cargarCatalogo() {
+  if (!gridProductos) return;
   gridProductos.innerHTML = productos.map(p => `
     <div class="card">
       <div>
@@ -131,29 +132,54 @@ function solicitarProducto(nombre) {
 
 cargarCatalogo();
 
-// 2. Chatbot con más de 30 Líneas de Conversación y Respuestas
+// 2. Chatbot con API (Backend)
 const btnIa = document.getElementById('btn-ia');
 const promptIa = document.getElementById('prompt-ia');
 const respuestaIa = document.getElementById('respuesta-ia');
 
-btnIa.addEventListener('click', procesarChat);
-promptIa.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') procesarChat();
-});
+if (btnIa && promptIa && respuestaIa) {
+  btnIa.addEventListener('click', procesarChat);
+  promptIa.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') procesarChat();
+  });
+}
 
-function procesarChat() {
+async function procesarChat() {
   const pregunta = promptIa.value.trim();
   if (!pregunta) return;
 
-  // Agregar mensaje del usuario
+  // 1. Mostrar el mensaje del usuario
   agregarMensaje(pregunta, 'usuario');
   promptIa.value = '';
 
-  // Simular respuesta del Bot
-  setTimeout(() => {
-    const respuestaBot = generarRespuestaIA(pregunta.toLowerCase());
-    agregarMensaje(respuestaBot, 'bot');
-  }, 500);
+  // 2. Crear la burbuja del bot con el mensaje "Pensando..."
+  const mensajeBotTemp = agregarMensaje('Pensando...', 'bot');
+
+  try {
+    // 3. Petición POST al servidor Express
+    const res = await fetch('http://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: pregunta })
+    });
+
+    const data = await res.json();
+
+    // 4. Reemplazar "Pensando..." con la respuesta real recibida de Gemini
+    if (data.reply) {
+      mensajeBotTemp.textContent = '🤖 ' + data.reply;
+    } else {
+      mensajeBotTemp.textContent = '🤖 Ocurrió un error en la respuesta del servidor.';
+    }
+
+  } catch (error) {
+    console.error('Error al conectar con el backend:', error);
+    mensajeBotTemp.textContent = '🤖 No se pudo conectar con el servidor (asegúrate de tener "node server.js" encendido).';
+  }
+
+  respuestaIa.scrollTop = respuestaIa.scrollHeight;
 }
 
 function agregarMensaje(texto, emisor) {
@@ -162,60 +188,7 @@ function agregarMensaje(texto, emisor) {
   div.textContent = (emisor === 'bot' ? '🤖 ' : '') + texto;
   respuestaIa.appendChild(div);
   respuestaIa.scrollTop = respuestaIa.scrollHeight;
-}
-
-function generarRespuestaIA(q) {
-  // Coincidencias temáticas extendidas (más de 30 variantes de respuestas)
-  if (q.includes('hola') || q.includes('buenas') || q.includes('saludos') || q.includes('inicio')) {
-    return "¡Hola! 🌱 Te doy la bienvenida a Green Worms. ¿Qué consulta tienes sobre plantas, abono o macetas?";
-  } 
-  if (q.includes('riego') || q.includes('agua') || q.includes('regar') || q.includes('frecuencia')) {
-    return "El riego depende de la especie: para suculentas cada 10-15 días; para tropicales cuando el primer centímetro de sustrato se sienta seco al tacto.";
-  } 
-  if (q.includes('humus') || q.includes('lombriz') || q.includes('abono') || q.includes('fertiliz')) {
-    return "Nuestro humus de lombriz ($3.00) es 100% orgánico. Aporta microorganismos benéficos y no corre riesgo de quemar las raíces de tus plantas.";
-  } 
-  if (q.includes('luz') || q.includes('sol') || q.includes('sombra') || q.includes('iluminac')) {
-    return "La mayoría de plantas de interior prefieren luz indirecta brillante. Evita el sol directo de mediodía para no quemar el follaje.";
-  } 
-  if (q.includes('maceta') || q.includes('personaliz') || q.includes('color') || q.includes('diseño')) {
-    return "¡Creamos macetas artesanales a tu gusto! Puedes pedir colores específicos, acabados mate o inscripciones personalizadas por $6.00.";
-  } 
-  if (q.includes('sustrato') || q.includes('tierra') || q.includes('drenaje') || q.includes('perlita')) {
-    return "Un buen sustrato debe ser esponjoso y drenar rápido. Nuestro sustrato preparado ($4.50) evita la acumulación excesiva de humedad.";
-  } 
-  if (q.includes('hoja amarilla') || q.includes('amarill') || q.includes('enferma') || q.includes('caida')) {
-    return "Las hojas amarillas suelen indicar exceso de agua o falta de drenaje. Revisa si la maceta tiene orificio de salida en la base.";
-  } 
-  if (q.includes('plaga') || q.includes('bicho') || q.includes('hongos') || q.includes('mancha')) {
-    return "Para plagas comunes como la cochinilla o pulgón, recomendamos limpiar las hojas con agua jabonosa neutra o aplicar jabón potásico.";
-  } 
-  if (q.includes('precio') || q.includes('costo') || q.includes('dolar') || q.includes('cuanto')) {
-    return "Nuestros precios están adaptados a la economía ecuatoriana: plantas desde $2.50, macetas desde $6.00 e insumos desde $3.00.";
-  } 
-  if (q.includes('envio') || q.includes('entrega') || q.includes('domicilio') || q.includes('cobertura')) {
-    return "Realizamos entregas coordinadas y envíos locales seguros para asegurar que tus plantas lleguen sanas y frescas.";
-  } 
-  if (q.includes('asesor') || q.includes('consulta') || q.includes('virtual') || q.includes('clase')) {
-    return "Ofrecemos asesoría botánica personalizada por $5.00/sesión para analizar tu espacio y diagnosticar tus plantas detenidamente.";
-  } 
-  if (q.includes('kit') || q.includes('herramienta') || q.includes('guantes') || q.includes('pulveriz')) {
-    return "Nuestro Kit de Jardinería Inicial ($9.50) incluye mini herramientas, guantes, atomizador y sustrato para empezar con todo listo.";
-  } 
-  if (q.includes('valeriana') || q.includes('medicinal') || q.includes('hierba')) {
-    return "La valeriana en maceta ($3.50) es fantástica para interiores bien iluminados y desprende un aroma natural muy relajante.";
-  } 
-  if (q.includes('monstera') || q.includes('ficus') || q.includes('grande')) {
-    return "Tanto la Monstera ($12.00) como el Ficus Lyrata ($15.00) son las favoritas para decoración de interiores y salas amplias.";
-  } 
-  if (q.includes('suculenta') || q.includes('cactus') || q.includes('facil')) {
-    return "Si buscas plantas de muy fácil cuidado, las suculentas ($2.50) y el Cactus San Pedro ($4.00) son la mejor alternativa.";
-  } 
-  if (q.includes('gracias') || q.includes('agradecedo') || q.includes('excelente') || q.includes('ok')) {
-    return "¡Con muchísimo gusto! Estoy aquí siempre para acompañarte en tu aventura botánica. 🪱🌱";
-  }
-
-  return `Entiendo tu duda sobre "${q}". Te sugiero revisar nuestras opciones en el catálogo o dejarnos un mensaje en el formulario para asesorarte a detalle.`;
+  return div;
 }
 
 // 3. Confirmación Formulario
@@ -224,7 +197,9 @@ const respuestaForm = document.getElementById('respuesta-form');
 
 if (formContacto) {
   formContacto.addEventListener('submit', (e) => {
-    respuestaForm.textContent = "Enviando mensaje...";
-    respuestaForm.style.color = "#40916c";
+    if (respuestaForm) {
+      respuestaForm.textContent = "Enviando mensaje...";
+      respuestaForm.style.color = "#40916c";
+    }
   });
 }
