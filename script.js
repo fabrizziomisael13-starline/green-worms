@@ -54,7 +54,7 @@ const productos = [
     categoria: "Planta Mediana",
     precio: "$15.00",
     descripcion: "Planta ornamental destacada por sus hojas en forma de violín. Ideal para salas luminosas.",
-    img: "https://images.unsplash.com/photo-1597055181300-e3633a207519?w=400"
+    img: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=400"
   },
   {
     id: 8,
@@ -102,6 +102,7 @@ const productos = [
 const gridProductos = document.getElementById('grid-productos');
 
 function cargarCatalogo() {
+  if (!gridProductos) return;
   gridProductos.innerHTML = productos.map(p => `
     <div class="card">
       <div>
@@ -136,24 +137,49 @@ const btnIa = document.getElementById('btn-ia');
 const promptIa = document.getElementById('prompt-ia');
 const respuestaIa = document.getElementById('respuesta-ia');
 
-btnIa.addEventListener('click', procesarChat);
-promptIa.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') procesarChat();
-});
+if (btnIa && promptIa && respuestaIa) {
+  btnIa.addEventListener('click', procesarChat);
+  promptIa.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') procesarChat();
+  });
+}
 
-function procesarChat() {
+async function procesarChat() {
   const pregunta = promptIa.value.trim();
   if (!pregunta) return;
 
-  // Agregar mensaje del usuario
+  // 1. Mostrar el mensaje del usuario
   agregarMensaje(pregunta, 'usuario');
   promptIa.value = '';
 
-  // Simular respuesta del Bot
-  setTimeout(() => {
-    const respuestaBot = generarRespuestaIA(pregunta.toLowerCase());
-    agregarMensaje(respuestaBot, 'bot');
-  }, 500);
+  // 2. Crear la burbuja del bot con el mensaje "Pensando..."
+  const mensajeBotTemp = agregarMensaje('Pensando...', 'bot');
+
+  try {
+    // 3. Petición POST al servidor Express
+    const res = await fetch('git add script.jshttp://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: pregunta })
+    });
+
+    const data = await res.json();
+
+    // 4. Reemplazar "Pensando..." con la respuesta real recibida de Gemini
+    if (data.reply) {
+      mensajeBotTemp.textContent = '🤖 ' + data.reply;
+    } else {
+      mensajeBotTemp.textContent = '🤖 Ocurrió un error en la respuesta del servidor.';
+    }
+
+  } catch (error) {
+    console.error('Error al conectar con el backend:', error);
+    mensajeBotTemp.textContent = '🤖 No se pudo conectar con el servidor (asegúrate de tener "node server.js" encendido).';
+  }
+
+  respuestaIa.scrollTop = respuestaIa.scrollHeight;
 }
 
 function agregarMensaje(texto, emisor) {
@@ -224,7 +250,9 @@ const respuestaForm = document.getElementById('respuesta-form');
 
 if (formContacto) {
   formContacto.addEventListener('submit', (e) => {
-    respuestaForm.textContent = "Enviando mensaje...";
-    respuestaForm.style.color = "#40916c";
+    if (respuestaForm) {
+      respuestaForm.textContent = "Enviando mensaje...";
+      respuestaForm.style.color = "#40916c";
+    }
   });
 }
