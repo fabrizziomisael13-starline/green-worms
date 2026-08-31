@@ -157,7 +157,7 @@ async function procesarChat() {
 
   try {
     // 3. Petición POST al servidor Express
-    const res = await fetch('git add script.jshttp://localhost:3000/api/chat', {
+    const res = await fetch('http://localhost:3000/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -167,92 +167,15 @@ async function procesarChat() {
 
     const data = await res.json();
 
-    // 4. Reemplazar "Pensando..." con la respuesta real recibida de Gemini
+    // Reemplazar "Pensando..." con la respuesta de Gemini
     if (data.reply) {
       mensajeBotTemp.textContent = '🤖 ' + data.reply;
     } else {
-      mensajeBotTemp.textContent = '🤖 Ocurrió un error en la respuesta del servidor.';
+      mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde.';
     }
 
   } catch (error) {
     console.error('Error al conectar con el backend:', error);
-    mensajeBotTemp.textContent = '🤖 No se pudo conectar con el servidor (asegúrate de tener "node server.js" encendido).';
+    mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde o contáctanos por el formulario de contacto.';
   }
-
-  respuestaIa.scrollTop = respuestaIa.scrollHeight;
-}
-
-function agregarMensaje(texto, emisor) {
-  const div = document.createElement('div');
-  div.className = emisor === 'usuario' ? 'mensaje-usuario' : 'mensaje-bot';
-  div.textContent = (emisor === 'bot' ? '🤖 ' : '') + texto;
-  respuestaIa.appendChild(div);
-  respuestaIa.scrollTop = respuestaIa.scrollHeight;
-}
-
-function generarRespuestaIA(q) {
-  // Coincidencias temáticas 
-  if (q.includes('hola') || q.includes('buenas') || q.includes('saludos') || q.includes('inicio')) {
-    return "¡Hola! 🌱 Te doy la bienvenida a Green Worms. ¿Qué consulta tienes sobre plantas, abono o macetas?";
-  } 
-  if (q.includes('riego') || q.includes('agua') || q.includes('regar') || q.includes('frecuencia')) {
-    return "El riego depende de la especie: para suculentas cada 10-15 días; para tropicales cuando el primer centímetro de sustrato se sienta seco al tacto.";
-  } 
-  if (q.includes('humus') || q.includes('lombriz') || q.includes('abono') || q.includes('fertiliz')) {
-    return "Nuestro humus de lombriz ($3.00) es 100% orgánico. Aporta microorganismos benéficos y no corre riesgo de quemar las raíces de tus plantas.";
-  } 
-  if (q.includes('luz') || q.includes('sol') || q.includes('sombra') || q.includes('iluminac')) {
-    return "La mayoría de plantas de interior prefieren luz indirecta brillante. Evita el sol directo de mediodía para no quemar el follaje.";
-  } 
-  if (q.includes('maceta') || q.includes('personaliz') || q.includes('color') || q.includes('diseño')) {
-    return "¡Creamos macetas artesanales a tu gusto! Puedes pedir colores específicos, acabados mate o inscripciones personalizadas por $6.00.";
-  } 
-  if (q.includes('sustrato') || q.includes('tierra') || q.includes('drenaje') || q.includes('perlita')) {
-    return "Un buen sustrato debe ser esponjoso y drenar rápido. Nuestro sustrato preparado ($4.50) evita la acumulación excesiva de humedad.";
-  } 
-  if (q.includes('hoja amarilla') || q.includes('amarill') || q.includes('enferma') || q.includes('caida')) {
-    return "Las hojas amarillas suelen indicar exceso de agua o falta de drenaje. Revisa si la maceta tiene orificio de salida en la base.";
-  } 
-  if (q.includes('plaga') || q.includes('bicho') || q.includes('hongos') || q.includes('mancha')) {
-    return "Para plagas comunes como la cochinilla o pulgón, recomendamos limpiar las hojas con agua jabonosa neutra o aplicar jabón potásico.";
-  } 
-  if (q.includes('precio') || q.includes('costo') || q.includes('dolar') || q.includes('cuanto')) {
-    return "Nuestros precios están adaptados a la economía ecuatoriana: plantas desde $2.50, macetas desde $6.00 e insumos desde $3.00.";
-  } 
-  if (q.includes('envio') || q.includes('entrega') || q.includes('domicilio') || q.includes('cobertura')) {
-    return "Realizamos entregas coordinadas y envíos locales seguros para asegurar que tus plantas lleguen sanas y frescas.";
-  } 
-  if (q.includes('asesor') || q.includes('consulta') || q.includes('virtual') || q.includes('clase')) {
-    return "Ofrecemos asesoría botánica personalizada por $5.00/sesión para analizar tu espacio y diagnosticar tus plantas detenidamente.";
-  } 
-  if (q.includes('kit') || q.includes('herramienta') || q.includes('guantes') || q.includes('pulveriz')) {
-    return "Nuestro Kit de Jardinería Inicial ($9.50) incluye mini herramientas, guantes, atomizador y sustrato para empezar con todo listo.";
-  } 
-  if (q.includes('valeriana') || q.includes('medicinal') || q.includes('hierba')) {
-    return "La valeriana en maceta ($3.50) es fantástica para interiores bien iluminados y desprende un aroma natural muy relajante.";
-  } 
-  if (q.includes('monstera') || q.includes('ficus') || q.includes('grande')) {
-    return "Tanto la Monstera ($12.00) como el Ficus Lyrata ($15.00) son las favoritas para decoración de interiores y salas amplias.";
-  } 
-  if (q.includes('suculenta') || q.includes('cactus') || q.includes('facil')) {
-    return "Si buscas plantas de muy fácil cuidado, las suculentas ($2.50) y el Cactus San Pedro ($4.00) son la mejor alternativa.";
-  } 
-  if (q.includes('gracias') || q.includes('agradecedo') || q.includes('excelente') || q.includes('ok')) {
-    return "¡Con muchísimo gusto! Estoy aquí siempre para acompañarte en tu aventura botánica. 🪱🌱";
-  }
-
-  return `Entiendo tu duda sobre "${q}". Te sugiero revisar nuestras opciones en el catálogo o dejarnos un mensaje en el formulario para asesorarte a detalle.`;
-}
-
-// 3. Confirmación Formulario
-const formContacto = document.getElementById('formulario-contacto');
-const respuestaForm = document.getElementById('respuesta-form');
-
-if (formContacto) {
-  formContacto.addEventListener('submit', (e) => {
-    if (respuestaForm) {
-      respuestaForm.textContent = "Enviando mensaje...";
-      respuestaForm.style.color = "#40916c";
-    }
-  });
 }
