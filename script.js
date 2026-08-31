@@ -144,7 +144,7 @@ if (btnIa && promptIa && respuestaIa) {
   });
 }
 
-async function procesarChat() {
+async function procesarChat() {}
   const pregunta = promptIa.value.trim();
   if (!pregunta) return;
 
