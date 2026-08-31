@@ -156,8 +156,8 @@ async function procesarChat() {}
   const mensajeBotTemp = agregarMensaje('Pensando...', 'bot');
 
   try {
-    // 3. Petición POST al servidor Express
-    const res = await fetch('http://localhost:3000/api/chat', {
+    // Petición POST al servidor Express
+    const res = await fetch('https://green-worms-backend.onrender.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -178,4 +178,4 @@ async function procesarChat() {}
     console.error('Error al conectar con el backend:', error);
     mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde o contáctanos por el formulario de contacto.';
   }
-}
+
