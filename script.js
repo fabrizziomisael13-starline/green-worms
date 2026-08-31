@@ -144,7 +144,7 @@ if (btnIa && promptIa && respuestaIa) {
   });
 }
 
-async function procesarChat() {}
+async function procesarChat() {
   const pregunta = promptIa.value.trim();
   if (!pregunta) return;
 
@@ -173,11 +173,12 @@ async function procesarChat() {}
     } else {
       mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde.';
     }
-
+  
   } catch (error) {
     console.error('Error al conectar con el backend:', error);
     mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde o contáctanos por el formulario de contacto.';
   }
+}
 function agregarMensaje(texto, emisor) {
   const div = document.createElement('div');
   div.className = emisor === 'usuario' ? 'mensaje-usuario' : 'mensaje-bot';
