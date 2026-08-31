@@ -109,7 +109,7 @@ body {
   gap: 28px;
 }
 
-/* Tarjetas con Efectos Visuales y Animaciones CSS */
+/* Tarjetas con Efectos Visuales */
 .card {
   background: white;
   padding: 20px;
@@ -203,7 +203,7 @@ body {
   transform: scale(0.96);
 }
 
-/* Chatbot Inteligente Estilizado */
+/* Chatbot Inteligente */
 .chat-container {
   max-width: 650px;
   margin: 0 auto;
