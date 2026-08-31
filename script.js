@@ -156,7 +156,7 @@ async function procesarChat() {
   const mensajeBotTemp = agregarMensaje('Pensando...', 'bot');
 
   try {
-    // 3. Petición POST al servidor Express
+    // Petición POST al servidor Express
     const res = await fetch('http://localhost:3000/api/chat', {
       method: 'POST',
       headers: {
@@ -167,21 +167,17 @@ async function procesarChat() {
 
     const data = await res.json();
 
-    // 4. Reemplazar "Pensando..." con la respuesta real recibida de Gemini
+    // Reemplazar "Pensando..." con la respuesta de Gemini
     if (data.reply) {
       mensajeBotTemp.textContent = '🤖 ' + data.reply;
     } else {
-      mensajeBotTemp.textContent = '🤖 Ocurrió un error en la respuesta del servidor.';
+      mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde.';
     }
 
   } catch (error) {
     console.error('Error al conectar con el backend:', error);
-    mensajeBotTemp.textContent = '🤖 No se pudo conectar con el servidor (asegúrate de tener "node server.js" encendido).';
+    mensajeBotTemp.textContent = '🤖 Lo sentimos, en este momento el asistente virtual no está disponible. Por favor, inténtalo más tarde o contáctanos por el formulario de contacto.';
   }
-
-  respuestaIa.scrollTop = respuestaIa.scrollHeight;
-}
-
 function agregarMensaje(texto, emisor) {
   const div = document.createElement('div');
   div.className = emisor === 'usuario' ? 'mensaje-usuario' : 'mensaje-bot';
