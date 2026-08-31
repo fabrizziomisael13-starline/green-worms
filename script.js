@@ -157,7 +157,7 @@ async function procesarChat() {
 
   try {
     // Petición POST al servidor Express
-    const res = await fetch('https://green-worms-backend.onrender.com', {
+    const res = await fetch('https://green-worms-backend.onrender.com/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
