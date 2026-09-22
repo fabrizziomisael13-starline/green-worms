@@ -188,3 +188,22 @@ function agregarMensaje(texto, emisor) {
   return div;
 }
 
+// Funcionalidad del Responsive
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+
+if (hamburger && navMenu) {
+  // Abrir / Cerrar menú al hacer clic en el botón
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+
+  // Cerrar el menú automáticamente al hacer clic en cualquier opción
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Worms | Plantas, Insumos y Asesoría Botánica</title>
+  <title>Fabrizzio González | Portafolio Personal & Green Worms</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,10 +11,20 @@
   <!-- Barra de Navegación -->
   <header>
     <nav class="navbar">
-      <h1 class="logo">Green Worms 🪱🌱</h1>
-      <ul>
+      <h1 class="logo">Fabrizzio González 🌱</h1>
+      
+      <!-- Menú Hamburguesa para Responsive -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
         <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#sobre-mi">Acerca de mí</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#asistente">Asistente IA</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -23,29 +33,65 @@
 
   <!-- Banner Principal (Hero) -->
   <section id="inicio" class="hero">
-    <h2>Green Worms te da la bienvenida</h2>
-    <p>Todo lo esencial acerca de la jardinería lo encontrarás aquí</p>
-    <a href="#catalogo" class="btn">Explorar Catálogo</a>
+    <h2>Bienvenido a mi espacio web</h2>
+    <p>Desarrollo web con dedicación, esfuerzo y aprendizaje constante.</p>
+    <a href="#proyectos" class="btn">Explorar Mi Proyecto</a>
   </section>
 
   <main class="contenedor">
-    <!-- Sección Catálogo -->
-    <section id="catalogo">
-      <h2>Catálogo Botánico</h2>
+
+    <!-- Sección Acerca de mí -->
+    <section id="sobre-mi" style="margin-top: 40px;">
+      <h2>Acerca de mí</h2>
+      <div class="sobre-mi-card" style="line-height: 1.8;">
+        <p>¡Hola! Quizá no hayas escuchado mi nombre o puede que ni siquiera me hayas visto alguna vez y que solo hayas entrado por curiosidad o para encargar algo...</p>
+        <p>En cualquiera de los dos casos, o de algún otro factor externo, me presento: <strong>Soy Fabrizzio González</strong>, una persona que se esmera por siempre dar lo mejor de sí a los demás, y en este sitio web no solo encontrarás productos, también podrás ver el tiempo y el esfuerzo dedicado a este proyecto. ¡Espero disfrutes tu estadía!</p>
+      </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section id="habilidades" style="margin-top: 60px;">
+      <h2>Mis Habilidades en Desarrollo</h2>
+      <div class="skills-container">
+        <div class="skill-item">
+          <span>HTML5 & Estructura Semántica</span>
+          <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span>CSS3 & Flexbox / Grid Responsive</span>
+          <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span>JavaScript (DOM & Peticiones Asíncronas)</span>
+          <div class="progress-bar"><div class="progress" style="width: 80%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span>Integración Backend con Express & API Gemini</span>
+          <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="proyectos" style="margin-top: 60px;">
+      <h2>Mis Proyectos</h2>
+      <p style="margin-bottom: 25px; font-style: italic; opacity: 0.9;">
+        En estos momentos, estás ante mi único proyecto vigente; tal vez estés viendo el principio, o quizá el final, de un camino dentro de la programación.
+      </p>
       <div id="grid-productos" class="grid">
-        <!-- Productos cargados dinámicamente desde script.js -->
+        <!-- Productos/Cards cargados dinámicamente desde script.js -->
       </div>
     </section>
 
     <!-- Sección Asistente Inteligente -->
     <section id="asistente" style="margin-top: 60px;">
-      <h2>Consulta a nuestra IA Botánica 🤖🌱</h2>
+      <h2>Asistente Virtual Botánico 🤖🌱</h2>
       <div class="chat-container">
         <div id="respuesta-ia" class="respuesta-box">
-          <div class="mensaje-bot">🤖 ¡Hola! Soy tu asistente de Green Worms. ¿En qué puedo ayudarte hoy con tus plantas, insumos o macetas?</div>
+          <div class="mensaje-bot">🤖 ¡Hola! Soy el asistente de Green Worms. ¿En qué puedo ayudarte hoy con tus plantas, insumos o consultas del proyecto?</div>
         </div>
         <div class="input-chat-group">
-          <input type="text" id="prompt-ia" placeholder="Escribe tu consulta (ej. riego, abono, sustrato, luz, macetas)...">
+          <input type="text" id="prompt-ia" placeholder="Escribe tu consulta (ej. riego, abono, sustrato, luz)...">
           <button id="btn-ia" class="btn">Enviar</button>
         </div>
       </div>
@@ -53,12 +99,13 @@
 
     <!-- Sección Formulario de Contacto -->
     <section id="contacto" style="margin-top: 60px;">
-      <h2>Contáctanos y Realiza tu Pedido</h2>
-      
+      <h2>Contáctame</h2>
+      <p style="margin-bottom: 20px;">¿Tienes alguna inquietud o deseas realizar un pedido? Déjame un mensaje:</p>
+
       <form id="formulario-contacto" action="https://formspree.io/f/mjyvklno" method="POST">
         <input type="text" name="nombre" id="nombre" placeholder="Tu Nombre Completo" required>
         <input type="email" name="email" id="email" placeholder="Tu Correo Electrónico" required>
-        <textarea name="mensaje" id="mensaje" rows="4" placeholder="Cuéntanos qué plantas o servicios deseas solicitar..." required></textarea>
+        <textarea name="mensaje" id="mensaje" rows="4" placeholder="Cuéntame qué necesitas o qué consulta tienes..." required></textarea>
         <button type="submit" class="btn">Enviar Mensaje</button>
         <p id="respuesta-form"></p>
       </form>
@@ -66,7 +113,7 @@
   </main>
 
   <footer style="text-align: center; padding: 25px; background: #1b4332; color: #d8f3dc; margin-top: 50px;">
-    <p>&copy; 2026 Green Worms 🪱🌱 - Cultivando vida en cada rincón.</p>
+    <p>&copy; 2026 - Green Worms by F.G 🪱🌱</p>
   </footer>
 
   <script src="script.js"></script>
