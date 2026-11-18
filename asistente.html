@@ -133,7 +133,7 @@
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ mensaje: text })
+            body: JSON.stringify({ message: text })
           });
 
           if (!response.ok) throw new Error('Error al conectar con el servidor de IA');
