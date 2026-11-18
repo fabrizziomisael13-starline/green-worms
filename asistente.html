@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asistente Botánico IA | Green Worms</title>
+
+  <!-- Estilos Globales y Tema Loto -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/loto.css">
+</head>
+<body class="loto-body">
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú lateral">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a href="main.html" class="nav-logo">Green Worms</a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="main.html">Inicio</a></li>
+        <li><a href="productos.html">Catálogo</a></li>
+        <li><a href="asistente.html" class="active">Asistente IA</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- BARRA LATERAL DESPLEGABLE (DRAWER) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <aside class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <span style="font-weight: 800; font-size: 1.2rem;">Menú Principal</span>
+      <button class="sidebar-close" id="sidebar-close">✕</button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="main.html"><span>Inicio</span> <span>➔</span></a></li>
+      <li><a href="productos.html"><span>Catálogo de Productos</span> <span>➔</span></a></li>
+      <li><a href="asistente.html"><span>Asistente Botánico IA</span> <span>➔</span></a></li>
+      <li><a href="contacto.html"><span>Nosotros y Contacto</span> <span>➔</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-container" style="padding-top: 20px;">
+
+    <header class="loto-header">
+      <div class="loto-tag">🪷 Inteligencia Artificial Botánica</div>
+      <h1 class="loto-title">Asistente <span>Loto IA</span></h1>
+      <p class="loto-subtitle">
+        Consulta sobre riegos, diagnóstico de plagas, sustratos vivos y nutrición vegetal guiada en tiempo real.
+      </p>
+    </header>
+
+    <!-- VENTANA DE CHAT -->
+    <div class="chat-wrapper">
+      <div class="chat-messages" id="chat-messages">
+        <div class="message bot">
+          ¡Hola! Soy tu asistente botánico de Green Worms impulsado por IA. ¿En qué puedo ayudarte hoy con el cuidado, sustrato o riego de tus cultivos?
+        </div>
+      </div>
+      
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Pregunta sobre plantas, plagas, sustratos...">
+        <button class="chat-send-btn" id="chat-send">➤</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTÓN FLOTANTE Y FLASHCARD MODAL (FLOR DE LOTO) -->
+  <button class="floating-btn" id="floating-btn" title="Curiosidad Botánica">💡</button>
+
+  <div class="flashcard-modal" id="flashcard-modal">
+    <div class="flashcard-container" id="flashcard-container">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="background: linear-gradient(135deg, #4c0519, #1f030a);">
+          <button class="flashcard-close" id="flashcard-close">✕</button>
+          <div style="font-size: 3rem; margin-bottom: 12px;">🌸</div>
+          <h3 class="neon-text" style="text-shadow: 0 0 10px rgba(244, 63, 94, 0.8);">Nelumbo nucifera</h3>
+          <p style="font-size: 0.9rem; color: #d1d5db;">Haz clic para voltear y descubrir el secreto de la flor de loto.</p>
+        </div>
+        <div class="flashcard-back" style="background: linear-gradient(135deg, #2d1218, #14080b);">
+          <h4 style="color: #f43f5e; margin-bottom: 12px; font-size: 1.1rem;">Efecto Loto (Superhidrofobicidad)</h4>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #e5e7eb;">
+            Las hojas de la flor de loto repelen completamente el agua gracias a nanoestructures microscópicas. Las gotas arrastran la suciedad manteniendo la planta impecable.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInput = document.getElementById('chat-input');
+      const chatSend = document.getElementById('chat-send');
+      const chatMessages = document.getElementById('chat-messages');
+
+      // URL backend en Render
+      const BACKEND_CHAT_URL = 'https://green-worms-backend.onrender.com/api/chat';
+
+      async function handleSendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // 1. Mostrar mensaje del usuario en pantalla
+        const userMsg = document.createElement('div');
+        userMsg.className = 'message user';
+        userMsg.textContent = text;
+        chatMessages.appendChild(userMsg);
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // 2. Indicador de "escribiendo..." o cargando respuesta
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'message bot';
+        loadingMsg.id = 'loading-bot';
+        loadingMsg.textContent = 'Consultando al Asistente Loto IA...';
+        chatMessages.appendChild(loadingMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        try {
+          // 3. Petición POST a backend conectado con la IA
+          const response = await fetch(BACKEND_CHAT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ mensaje: text })
+          });
+
+          if (!response.ok) throw new Error('Error al conectar con el servidor de IA');
+
+          const data = await response.json();
+          
+          // Eliminar mensaje de carga
+          loadingMsg.remove();
+
+          // 4. Mostrar respuesta real de la IA
+          const botMsg = document.createElement('div');
+          botMsg.className = 'message bot';
+          botMsg.textContent = data.respuesta || data.reply || 'Respuesta generada correctamente por el asistente botánico.';
+          chatMessages.appendChild(botMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        } catch (error) {
+          console.error('Error en el chat:', error);
+          loadingMsg.remove();
+
+          // Mensaje de respaldo en caso de que el servidor esté despertando o falle
+          const errorMsg = document.createElement('div');
+          errorMsg.className = 'message bot';
+          errorMsg.textContent = 'Lo sentimos, en este momento los servidores aún no están en funcionamiento. Intente más tarde.';
+          chatMessages.appendChild(errorMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      }
+
+      if (chatSend) chatSend.addEventListener('click', handleSendMessage);
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') handleSendMessage();
+        });
+      }
+    });
+  </script>

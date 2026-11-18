@@ -1,0 +1,133 @@
+/* TEMA INICIO */
+:root {
+  --bg-dark: #0a0d0b;
+  --card-dark: #121814;
+  --accent-gold: #f59e0b;
+  --text-light: #f3f4f6;
+  --text-muted: #9ca3af;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.main-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* --- HERO SECTION STYLE --- */
+.asml-hero {
+  position: relative;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 60px 0 40px;
+  background: linear-gradient(to bottom, rgba(10,13,11,0.7), rgba(10,13,11,0.95)), url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  border-radius: 24px;
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.asml-content {
+  max-width: 800px;
+  padding: 0 48px;
+}
+
+.asml-title {
+  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.asml-title span {
+  color: var(--accent-gold);
+  text-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
+}
+
+.asml-desc {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 600px;
+}
+
+/* ENLACES RÁPIDOS INFERIORES */
+.quick-links-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 40px;
+  padding-top: 32px;
+}
+
+.quick-links-header {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  padding: 0 48px;
+  font-weight: 700;
+}
+
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.quick-card {
+  background: var(--card-dark);
+  padding: 32px;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.quick-card:hover {
+  background: #18221b;
+  transform: translateY(-4px);
+}
+
+.quick-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 32px;
+  width: 32px;
+  height: 3px;
+  background: var(--accent-gold);
+  transition: width 0.3s ease;
+}
+
+.quick-card:hover::after {
+  width: 64px;
+}
+
+.quick-icon {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.quick-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}

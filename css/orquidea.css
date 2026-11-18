@@ -1,0 +1,165 @@
+/* ESTILO CATÁLOGO INMERSIVO  */
+:root {
+  --catalog-bg: #0d0f12;
+  --card-bg: #161b22;
+  --accent-purple: #a855f7;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+}
+
+body.catalog-body {
+  background-color: var(--catalog-bg);
+  color: var(--text-main);
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* CONTENEDOR DE CATEGORÍAS  */
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.category-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.category-card:hover, .category-card.active {
+  background: linear-gradient(135deg, #231b35, #161b22);
+  border-color: var(--accent-purple);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+}
+
+.category-icon {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.category-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+/* SECCIÓN DE PRODUCTOS DESPLEGADOS */
+.products-section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  border-left: 4px solid var(--accent-purple);
+  padding-left: 14px;
+}
+
+.products-grid-kfc {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.kfc-product-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.kfc-product-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
+}
+
+.kfc-img-box {
+  width: 100%;
+  height: 200px;
+  background: #1f242c;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kfc-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.kfc-product-card:hover .kfc-img-box img {
+  transform: scale(1.05);
+}
+
+.kfc-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.kfc-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.kfc-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.kfc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.kfc-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #34d399;
+}
+
+.kfc-btn {
+  background: var(--accent-purple);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 50px;
+  transition: var(--transition-smooth);
+}
+
+.kfc-btn:hover {
+  background: #9333ea;
+  transform: scale(1.05);
+}

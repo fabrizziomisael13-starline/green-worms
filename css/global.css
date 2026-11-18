@@ -1,0 +1,317 @@
+/* Estilo General */
+:root {
+  --nav-height: 72px;
+  --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: var(--nav-height);
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #0d0f12;
+  color: #f3f4f6;
+}
+
+/* --- NAVBAR PRINCIPAL --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: rgba(13, 15, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+  transition: var(--transition-smooth);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(13, 15, 18, 0.95);
+}
+
+.nav-container {
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Botón hamburguesa menú lateral */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  transition: var(--transition-smooth);
+}
+
+/* LOGO GRANDE Y LLAMATIVO */
+.nav-logo {
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: #f59e0b;
+  letter-spacing: -0.8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 6px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #9ca3af;
+  font-weight: 500;
+  font-size: 0.92rem;
+  padding: 8px 16px;
+  border-radius: 50px;
+  transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.nav-links a.active {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  font-weight: 600;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* --- BARRA LATERAL DESPLEGABLE (DRAWER) --- */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+  z-index: 1005;
+}
+
+.sidebar-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: -340px;
+  width: 320px;
+  height: 100vh;
+  background: #161b22;
+  color: #fff;
+  box-shadow: 10px 0 40px rgba(0,0,0,0.5);
+  z-index: 1006;
+  transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-drawer.open {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 16px;
+}
+
+.sidebar-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-menu a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #d1d5db;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: var(--transition-smooth);
+}
+
+.sidebar-menu a:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  transform: translateX(6px);
+}
+
+/* BOTÓN FLOTANTE Y FLASHCARD MODAL */
+.floating-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+  border: none;
+  cursor: pointer;
+  z-index: 1999;
+  transition: var(--transition-smooth);
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.flashcard-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+  z-index: 2000;
+}
+
+.flashcard-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.flashcard-container {
+  width: 340px;
+  height: 440px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border-radius: 24px;
+}
+
+.flashcard-container.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, #1b4332, #081c15);
+  color: #fff;
+}
+
+.flashcard-back {
+  background: linear-gradient(135deg, #2d241e, #1a1411);
+  color: #fff;
+  transform: rotateY(180deg);
+}
+
+.neon-text {
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 0 0 20px rgba(245, 158, 11, 0.5);
+  margin-bottom: 16px;
+  font-family: serif;
+}
+
+.flashcard-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Inmersivo | Green Worms</title>
+
+  <!-- Estilos Globales y Catálogo -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/orquidea.css">
+</head>
+<body class="catalog-body">
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú lateral">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a href="main.html" class="nav-logo">Green Worms</a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="main.html">Inicio</a></li>
+        <li><a href="productos.html" class="active">Catálogo</a></li>
+        <li><a href="asistente.html">Asistente IA</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- BARRA LATERAL DESPLEGABLE (DRAWER) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <aside class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <span style="font-weight: 800; font-size: 1.2rem;">Menú Principal</span>
+      <button class="sidebar-close" id="sidebar-close">✕</button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="main.html"><span>Inicio</span> <span>➔</span></a></li>
+      <li><a href="productos.html"><span>Catálogo de Productos</span> <span>➔</span></a></li>
+      <li><a href="asistente.html"><span>Asistente Botánico IA</span> <span>➔</span></a></li>
+      <li><a href="contacto.html"><span>Nosotros y Contacto</span> <span>➔</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL DEL CATÁLOGO -->
+  <main class="main-container" style="padding-top: 48px; padding-bottom: 90px;">
+    
+    <header style="margin-bottom: 36px; text-align: center;">
+      <h1 style="font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; color: #fff;">Estante Botánico Inmersivo</h1>
+      <p style="color: #9ca3af; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Explora nuestras categorías especializadas y despliega los insumos diseñados para optimizar tus cultivos.</p>
+    </header>
+
+    <!-- NIVEL 1: MENÚ DE CATEGORÍAS -->
+    <div class="categories-container" id="categories-container">
+      <div class="category-card active" data-category="todos">
+        <div class="category-icon">🌿</div>
+        <div class="category-name">Todos los Insumos</div>
+      </div>
+      <div class="category-card" data-category="kits">
+        <div class="category-icon">📦</div>
+        <div class="category-name">Kits de Cultivo</div>
+      </div>
+      <div class="category-card" data-category="sustratos">
+        <div class="category-icon">🌱</div>
+        <div class="category-name">Sustratos Vivos</div>
+      </div>
+      <div class="category-card" data-category="nutrientes">
+        <div class="category-icon">✨</div>
+        <div class="category-name">Nutrientes & Abonos</div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE PRODUCTOS DESPLEGADOS -->
+    <div style="margin-top: 48px;">
+      <div class="products-section-title" id="section-title">Todos los Productos Disponibles</div>
+      
+      <div class="products-grid-kfc" id="products-grid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: #9ca3af;">
+          Despertando el almacén y cargando el inventario...
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTÓN FLOTANTE Y FLASHCARD -->
+  <button class="floating-btn" id="floating-btn" title="Curiosidad Botánica">💡</button>
+
+  <div class="flashcard-modal" id="flashcard-modal">
+    <div class="flashcard-container" id="flashcard-container">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="background: linear-gradient(135deg, #3b0764, #1e1b24);">
+          <button class="flashcard-close" id="flashcard-close">✕</button>
+          <div style="font-size: 3rem; margin-bottom: 12px;">🌺</div>
+          <h3 class="neon-text" style="text-shadow: 0 0 10px rgba(168, 85, 247, 0.8);">Orchidaceae</h3>
+          <p style="font-size: 0.9rem; color: #d1d5db;">Haz clic para voltear y descubrir el secreto de la orquídea.</p>
+        </div>
+        <div class="flashcard-back" style="background: linear-gradient(135deg, #231b35, #120f17);">
+          <h4 style="color: #c084fc; margin-bottom: 12px; font-size: 1.1rem;">Naturaleza Epífita</h4>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #e5e7eb;">
+            La mayoría de las orquídeas no crecen en la tierra, sino sobre los troncos de los árboles, absorbiendo humedad y nutrientes directamente de la atmósfera.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navbar.js"></script>
+  <script src="js/productos.js"></script>
+</body>
+</html>
