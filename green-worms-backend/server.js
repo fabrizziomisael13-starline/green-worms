@@ -99,7 +99,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const model = genAI.getGenerativeModel({ 
-      model: 'gemini-flash',
+      model: 'gemini-pro',
       systemInstruction: SYSTEM_INSTRUCTION
     });
 
