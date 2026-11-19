@@ -17,6 +17,17 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Conectado exitosamente a MongoDB Atlas 🍃"))
   .catch((err) => console.error("Error al conectar a MongoDB:", err));
 
+  // Esquema para los mensajes de contacto
+const contactoSchema = new mongoose.Schema({
+    nombre: { type: String, required: true },
+    email: { type: String, required: true },
+    mensaje: { type: String, required: true },
+    fecha: { type: Date, default: Date.now }
+});
+
+const Contacto = mongoose.model('Contacto', contactoSchema);
+
+
 // Definir el Esquema y Modelo para los productos
 const productoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
@@ -116,4 +127,25 @@ app.post('/api/chat', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor de Green Worms corriendo en el puerto ${PORT}`);
+});
+
+// Ruta para guardar mensajes del formulario de contacto en MongoDB
+app.post('/api/contacto', async (req, res) => {
+    try {
+        const { nombre, email, mensaje } = req.body;
+
+        // Validación básica
+        if (!nombre || !email || !mensaje) {
+            return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
+        }
+
+        // Crear y guardar en la base de datos
+        const nuevoMensaje = new Contacto({ nombre, email, mensaje });
+        await nuevoMensaje.save();
+
+        res.status(201).json({ success: true, message: '¡Mensaje enviado y guardado con éxito!' });
+    } catch (error) {
+        console.error('Error al guardar el mensaje:', error);
+        res.status(500).json({ error: 'Error interno del servidor al procesar el mensaje.' });
+    }
 });
