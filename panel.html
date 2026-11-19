@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Worms - Gestión Interna</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    body {
+      background: #121212;
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .admin-wrapper {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+    .card-box {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-top: 4px solid #f59e0b;
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+    .login-box {
+      max-width: 400px;
+      margin: 80px auto;
+      text-align: center;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 16px 0;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #222;
+      color: #fff;
+      box-sizing: border-box;
+    }
+    .btn-gold {
+      background: #f59e0b;
+      color: #121212;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+    }
+    .btn-gold:hover {
+      background: #d97706;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .btn-secondary {
+      background: #262626;
+      color: #ddd;
+      border: 1px solid #444;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .tabla-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #2e2e2e;
+      font-size: 14px;
+    }
+    th {
+      color: #f59e0b;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    tr:hover {
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vista 1: Login Rápido -->
+  <div id="vista-login" class="card-box login-box">
+    <h2 style="margin-top: 0; color: #f59e0b;">⚙️ Gestión Interna</h2>
+    <p style="color: #aaa; font-size: 14px;">Ingresa la clave de administrador para ver las consultas recibidas.</p>
+    <form onsubmit="verificarAcceso(event)">
+      <input type="password" id="admin-pass" placeholder="Contraseña de acceso" required>
+      <button type="submit" class="btn-gold">Ingresar al Panel</button>
+    </form>
+    <div style="margin-top: 18px;">
+      <a href="admin.html" style="color: #888; font-size: 13px; text-decoration: none;">← Volver al Inicio</a>
+    </div>
+  </div>
+
+  <!-- Vista 2: Tabla de Mensajes de MongoDB -->
+  <div id="vista-panel" class="admin-wrapper" style="display: none;">
+    <div class="card-box">
+      <div class="panel-header">
+        <div>
+          <h2 style="margin: 0; color: #f59e0b;">📬 Mensajes de Contacto</h2>
+          <p style="margin: 4px 0 0; color: #aaa; font-size: 14px;">Consultas registradas en MongoDB Atlas</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="cargarMensajes()" class="btn-secondary">↻ Actualizar</button>
+          <a href="admin.html" class="btn-secondary">← Inicio</a>
+        </div>
+      </div>
+
+      <div class="tabla-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Mensaje</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-mensajes">
+            <tr><td colspan="4" style="text-align: center; color: #888;">Cargando mensajes...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Clave
+    const CLAVE_ADMIN = "greenworms2026";
+    // URL backend en Render
+    const API_URL = "https://green-worms-backend.onrender.com/api/chat";
+
+    function verificarAcceso(e) {
+      e.preventDefault();
+      const input = document.getElementById('admin-pass').value;
+      if (input === CLAVE_ADMIN) {
+        document.getElementById('vista-login').style.display = 'none';
+        document.getElementById('vista-panel').style.display = 'block';
+        cargarMensajes();
+      } else {
+        alert("Contraseña incorrecta.");
+      }
+    }
+
+    async function cargarMensajes() {
+      const tbody = document.getElementById('tabla-mensajes');
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Consultando base de datos...</td></tr>';
+
+      try {
+        const res = await fetch(API_URL);
+        const datos = await res.json();
+
+        if (!Array.isArray(datos) || datos.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Aún no hay mensajes registrados.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = datos.map(item => {
+          const fecha = item.fecha ? new Date(item.fecha).toLocaleDateString('es-EC') : 'Sin fecha';
+          return `
+            <tr>
+              <td style="white-space: nowrap; color: #aaa;">${fecha}</td>
+              <td style="font-weight: bold;">${item.nombre || ''}</td>
+              <td style="color: #f59e0b;">${item.email || ''}</td>
+              <td>${item.mensaje || ''}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #ef4444;">Error al conectar con el servidor.</td></tr>';
+      }
+    }
+  </script>
+</body>
+</html>

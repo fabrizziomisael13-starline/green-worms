@@ -1,0 +1,82 @@
+/* Estilos temáticos sección de Contacto  */
+.seccion-tulipan-contacto {
+    padding: 80px 20px;
+    background: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tulipan-contacto-card {
+    width: 100%;
+    max-width: 600px;
+    background: #1a1a1a;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    border: 1px solid #333;
+    border-top: 4px solid #e91e63; /* Toque rosado/magenta característico del tulipán */
+}
+
+.tulipan-titulo {
+    margin-top: 0;
+    color: #f48fb1;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.tulipan-subtitulo {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.tulipan-form .tulipan-form-group {
+    margin-bottom: 20px;
+}
+
+.tulipan-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #ddd;
+}
+
+.tulipan-form input,
+.tulipan-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #222;
+    color: white;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.tulipan-form input:focus,
+.tulipan-form textarea:focus {
+    outline: none;
+    border-color: #e91e63;
+}
+
+.btn-tulipan-enviar {
+    width: 100%;
+    margin-top: 10px;
+    background: #e91e63;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-tulipan-enviar:hover {
+    background: #d81b60;
+    transform: translateY(-2px);
+}
