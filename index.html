@@ -3,119 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fabrizzio González | Portafolio Personal & Green Worms</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Green Worms | Ecosistema Botánico</title>
+  
+  <!-- Estilos Globales y Tema Inicio -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/girasol.css">
 </head>
 <body>
 
-  <!-- Barra de Navegación -->
-  <header>
-    <nav class="navbar">
-      <h1 class="logo">Fabrizzio González 🌱</h1>
-      
-      <!-- Menú Hamburguesa para Responsive -->
-      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú lateral">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a href="index.html" class="nav-logo">Green Worms</a>
+      </div>
 
-      <ul class="nav-menu" id="nav-menu">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#sobre-mi">Acerca de mí</a></li>
-        <li><a href="#habilidades">Habilidades</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#asistente">Asistente IA</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Inicio</a></li>
+        <li><a href="productos.html">Catálogo</a></li>
+        <li><a href="asistente.html">Asistente IA</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
-  <!-- Banner Principal (Hero) -->
-  <section id="inicio" class="hero">
-    <h2>Bienvenido a mi espacio web</h2>
-    <p>Desarrollo web con dedicación, esfuerzo y aprendizaje constante.</p>
-    <a href="#proyectos" class="btn">Explorar Mi Proyecto</a>
-  </section>
+  <!-- BARRA LATERAL DESPLEGABLE (DRAWER) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <aside class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <span style="font-weight: 800; font-size: 1.2rem;">Menú Principal</span>
+      <button class="sidebar-close" id="sidebar-close">✕</button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html"><span>Inicio</span> <span>➔</span></a></li>
+      <li><a href="productos.html"><span>Catálogo de Productos</span> <span>➔</span></a></li>
+      <li><a href="asistente.html"><span>Asistente Botánico IA</span> <span>➔</span></a></li>
+      <li><a href="contacto.html"><span>Nosotros y Contacto</span> <span>➔</span></a></li>
+    </ul>
+  </aside>
 
-  <main class="contenedor">
-
-    <!-- Sección Acerca de mí -->
-    <section id="sobre-mi" style="margin-top: 40px;">
-      <h2>Acerca de mí</h2>
-      <div class="sobre-mi-card" style="line-height: 1.8;">
-        <p>¡Hola! Quizá no hayas escuchado mi nombre o puede que ni siquiera me hayas visto alguna vez y que solo hayas entrado por curiosidad o para encargar algo...</p>
-        <p>En cualquiera de los dos casos, o de algún otro factor externo, me presento: <strong>Soy Fabrizzio González</strong>, una persona que se esmera por siempre dar lo mejor de sí a los demás, y en este sitio web no solo encontrarás productos, también podrás ver el tiempo y el esfuerzo dedicado a este proyecto. ¡Espero disfrutes tu estadía!</p>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-container">
+    <section class="asml-hero">
+      <div class="asml-content">
+        <h1 class="asml-title">Cultivando el futuro, <span>una raíz</span> a la vez.</h1>
+        <p class="asml-desc">
+          Tecnología orgánica, sustratos vivos e inteligencia artificial de alta precisión para transformar la gestión de tus cultivos desde la raíz.
+        </p>
       </div>
-    </section>
 
-    <!-- Sección Habilidades -->
-    <section id="habilidades" style="margin-top: 60px;">
-      <h2>Mis Habilidades en Desarrollo</h2>
-      <div class="skills-container">
-        <div class="skill-item">
-          <span>HTML5 & Estructura Semántica</span>
-          <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
-        </div>
-        <div class="skill-item">
-          <span>CSS3 & Flexbox / Grid Responsive</span>
-          <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
-        </div>
-        <div class="skill-item">
-          <span>JavaScript (DOM & Peticiones Asíncronas)</span>
-          <div class="progress-bar"><div class="progress" style="width: 80%;"></div></div>
-        </div>
-        <div class="skill-item">
-          <span>Integración Backend con Express & API Gemini</span>
-          <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Proyectos -->
-    <section id="proyectos" style="margin-top: 60px;">
-      <h2>Mis Proyectos</h2>
-      <p style="margin-bottom: 25px; font-style: italic; opacity: 0.9;">
-        En estos momentos, estás ante mi único proyecto vigente; tal vez estés viendo el principio, o quizá el final, de un camino dentro de la programación.
-      </p>
-      <div id="grid-productos" class="grid">
-        <!-- Productos/Cards cargados dinámicamente desde script.js -->
-      </div>
-    </section>
-
-    <!-- Sección Asistente Inteligente -->
-    <section id="asistente" style="margin-top: 60px;">
-      <h2>Asistente Virtual Botánico 🤖🌱</h2>
-      <div class="chat-container">
-        <div id="respuesta-ia" class="respuesta-box">
-          <div class="mensaje-bot">🤖 ¡Hola! Soy el asistente de Green Worms. ¿En qué puedo ayudarte hoy con tus plantas, insumos o consultas del proyecto?</div>
-        </div>
-        <div class="input-chat-group">
-          <input type="text" id="prompt-ia" placeholder="Escribe tu consulta (ej. riego, abono, sustrato, luz)...">
-          <button id="btn-ia" class="btn">Enviar</button>
+      <!-- ENLACES RÁPIDOS INFERIORES -->
+      <div class="quick-links-section">
+        <div class="quick-links-header">Enlaces Rápidos</div>
+        <div class="quick-links-grid">
+          <a href="productos.html" class="quick-card">
+            <div class="quick-icon">🌿</div>
+            <div class="quick-title">Catálogo Botánico</div>
+          </a>
+          <a href="asistente.html" class="quick-card">
+            <div class="quick-icon">🤖</div>
+            <div class="quick-title">Asistente IA</div>
+          </a>
+          <a href="contacto.html" class="quick-card">
+            <div class="quick-icon">✨</div>
+            <div class="quick-title">Propósito & Contacto</div>
+          </a>
+          <a href="panel.html" class="quick-card">
+            <div class="quick-icon">⚙️</div>
+            <div class="quick-title">Gestión Interna</div>
+          </a>
         </div>
       </div>
-    </section>
-
-    <!-- Sección Formulario de Contacto -->
-    <section id="contacto" style="margin-top: 60px;">
-      <h2>Contáctame</h2>
-      <p style="margin-bottom: 20px;">¿Tienes alguna inquietud o deseas realizar un pedido? Déjame un mensaje:</p>
-
-      <form id="formulario-contacto" action="https://formspree.io/f/mjyvklno" method="POST">
-        <input type="text" name="nombre" id="nombre" placeholder="Tu Nombre Completo" required>
-        <input type="email" name="email" id="email" placeholder="Tu Correo Electrónico" required>
-        <textarea name="mensaje" id="mensaje" rows="4" placeholder="Cuéntame qué necesitas o qué consulta tienes..." required></textarea>
-        <button type="submit" class="btn">Enviar Mensaje</button>
-        <p id="respuesta-form"></p>
-      </form>
     </section>
   </main>
 
-  <footer style="text-align: center; padding: 25px; background: #1b4332; color: #d8f3dc; margin-top: 50px;">
-    <p>&copy; 2026 - Green Worms by F.G 🪱🌱</p>
-  </footer>
 
-  <script src="script.js"></script>
+  <button class="floating-btn" id="floating-btn" title="Curiosidad Botánica">💡</button>
+
+  <div class="flashcard-modal" id="flashcard-modal">
+    <div class="flashcard-container" id="flashcard-container">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <button class="flashcard-close" id="flashcard-close">✕</button>
+          <div style="font-size: 3rem; margin-bottom: 12px;">🌻</div>
+          <h3 class="neon-text">Helianthus</h3>
+          <p style="font-size: 0.9rem; color: #d1d5db;">Haz clic para voltear y descubrir el secreto del girasol.</p>
+        </div>
+        <div class="flashcard-back">
+          <h4 style="color: #f59e0b; margin-bottom: 12px; font-size: 1.1rem;">Heliotropismo Activo</h4>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #e5e7eb;">
+            Los girasoles jóvenes siguen al sol durante el día. Al madurar, se quedan fijos al este porque el calor matutino atrae cinco veces más polinizadores.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navbar.js"></script>
 </body>
 </html>
+
