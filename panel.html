@@ -114,6 +114,41 @@
   <!-- Vista 2: Tabla de Mensajes de MongoDB -->
   <div id="vista-panel" class="admin-wrapper" style="display: none;">
     <div class="card-box">
+      <!-- Tarjeta: Crear y Gestionar Productos en MongoDB -->
+    <div class="card-box" style="margin-top: 28px;">
+      <div class="panel-header">
+        <div>
+          <h2 style="margin: 0; color: #f59e0b;">🌱 Productos en MongoDB</h2>
+          <p style="margin: 4px 0 0; color: #aaa; font-size: 14px;">Crea productos nuevos para el catálogo en vivo</p>
+        </div>
+        <button onclick="cargarProductosAdmin()" class="btn-secondary">↻ Actualizar catálogo</button>
+      </div>
+
+      <form id="form-nuevo-producto" onsubmit="crearProductoMongo(event)" style="display: grid; gap: 12px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+          <input type="text" id="prod-nombre" placeholder="Nombre del producto" required style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff;">
+          <input type="number" id="prod-precio" step="0.01" min="0" placeholder="Precio (ej. 8.50)" required style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff;">
+        </div>
+        <input type="text" id="prod-imagen" placeholder="URL de imagen (opcional)" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff;">
+        <textarea id="prod-descripcion" rows="2" placeholder="Descripción (incluye palabras como kit, sustrato o abono si quieres que filtre por categoría)" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff;"></textarea>
+        <button type="submit" id="btn-crear-prod" class="btn-gold">Guardar Producto en MongoDB</button>
+      </form>
+
+      <div class="tabla-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-productos-admin">
+            <tr><td colspan="3" style="text-align: center; color: #888;">Sin cargar aún...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
       <div class="panel-header">
         <div>
           <h2 style="margin: 0; color: #f59e0b;">📬 Mensajes de Contacto</h2>
@@ -188,6 +223,96 @@
       } catch (err) {
         console.error(err);
         tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #ef4444;">Error al conectar con el servidor.</td></tr>';
+      }
+    }
+    const API_PRODUCTOS = "https://green-worms-backend.onrender.com/api/productos";
+
+    // Llamar también cuando entra el admin
+    const _verificarAccesoOriginal = verificarAcceso;
+    verificarAcceso = function(e) {
+      _verificarAccesoOriginal(e);
+      if (document.getElementById('vista-panel').style.display === 'block') {
+        cargarProductosAdmin();
+      }
+    };
+
+    async function crearProductoMongo(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-crear-prod');
+      const nombre = document.getElementById('prod-nombre').value.trim();
+      const precio = parseFloat(document.getElementById('prod-precio').value);
+      const imagen = document.getElementById('prod-imagen').value.trim();
+      const descripcion = document.getElementById('prod-descripcion').value.trim();
+
+      const cuerpo = { nombre, precio, descripcion };
+      if (imagen) cuerpo.imagen = imagen;
+
+      btn.disabled = true;
+      btn.textContent = "Guardando...";
+
+      try {
+        const res = await fetch(API_PRODUCTOS, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cuerpo)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert("Error: " + (data.error || "No se pudo crear el producto."));
+          return;
+        }
+
+        alert("¡Producto creado en MongoDB!");
+        document.getElementById('form-nuevo-producto').reset();
+        cargarProductosAdmin();
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión con el servidor.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Guardar Producto en MongoDB";
+      }
+    }
+
+    async function cargarProductosAdmin() {
+      const tbody = document.getElementById('tabla-productos-admin');
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #888;">Cargando productos...</td></tr>';
+
+      try {
+        const res = await fetch(API_PRODUCTOS);
+        const lista = await res.json();
+
+        if (!Array.isArray(lista) || lista.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #888;">No hay productos en MongoDB.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = lista.map(p => `
+          <tr>
+            <td><strong>${p.nombre || p.name || 'Producto'}</strong><br><small style="color:#aaa;">${p.descripcion || ''}</small></td>
+            <td style="color:#f59e0b; white-space:nowrap;">$${Number(p.precio || 0).toFixed(2)}</td>
+            <td><button onclick="eliminarProductoMongo('${p._id}')" class="btn-secondary" style="padding:5px 10px;">Eliminar</button></td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #ef4444;">Error al cargar productos.</td></tr>';
+      }
+    }
+
+    async function eliminarProductoMongo(id) {
+      if (!confirm("¿Eliminar este producto de MongoDB?")) return;
+      try {
+        const res = await fetch(`${API_PRODUCTOS}/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          cargarProductosAdmin();
+        } else {
+          alert("No se pudo eliminar el producto.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión.");
       }
     }
   </script>
