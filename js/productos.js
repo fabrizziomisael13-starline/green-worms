@@ -61,9 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     grid.innerHTML = products.map(prod => {
+      const idProd = prod._id || prod.id || '';
       const nombre = prod.nombre || prod.name || 'Insumo Botánico';
+      const nombreSeguro = nombre.replace(/'/g, "\\'");
       const descripcion = prod.descripcion || prod.description || 'Elemento seleccionado para nutrición y cultivo.';
-      const precio = prod.precio !== undefined ? Number(prod.precio).toFixed(2) : '0.00';
+      const precioNum = prod.precio !== undefined ? Number(prod.precio) : 0;
+      const precio = precioNum.toFixed(2);
       const imagen = prod.imagen || prod.image || FALLBACK_IMG;
 
       return `
@@ -76,15 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
               <h3 class="kfc-title">${nombre}</h3>
               <p class="kfc-desc">${descripcion}</p>
             </div>
-            <div class="kfc-footer">
+            <div class="kfc-footer" style="display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
               <span class="kfc-price">$${precio}</span>
-              <a href="contacto.html" class="kfc-btn">Consultar ➔</a>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" onclick="agregarAlCarrito('${idProd}', '${nombreSeguro}', ${precioNum})" class="kfc-btn" style="border: none; cursor: pointer;">+ Carrito</button>
+                <a href="contacto.html" class="kfc-btn">Consultar ➔</a>
+              </div>
             </div>
           </div>
         </article>
       `;
     }).join('');
-  }
+}
 
   categoryCards.forEach(card => {
     card.addEventListener('click', () => {
@@ -113,13 +119,13 @@ let carrito = JSON.parse(localStorage.getItem('greenWormsCart')) || [];
 
 // 1. Agregar un producto al carrito
 function agregarAlCarrito(id, nombre, precio) {
-    const productoExistente = carrito.find(item => item.id === id);
+    const productoExistente = carrito.find(item => String(item.id) === String(id));
 
     if (productoExistente) {
         productoExistente.cantidad += 1;
     } else {
         carrito.push({
-            id: id,
+            id: String(id),
             nombre: nombre,
             precio: parseFloat(precio),
             cantidad: 1
@@ -131,11 +137,11 @@ function agregarAlCarrito(id, nombre, precio) {
 
 // 2. Modificar cantidad de un producto
 function cambiarCantidad(id, cambio) {
-    const producto = carrito.find(item => item.id === id);
+    const producto = carrito.find(item => String(item.id) === String(id));
     if (producto) {
         producto.cantidad += cambio;
         if (producto.cantidad <= 0) {
-            carrito = carrito.filter(item => item.id !== id);
+            carrito = carrito.filter(item => String(item.id) !== String(id));
         }
     }
     guardarYActualizar();
@@ -143,7 +149,7 @@ function cambiarCantidad(id, cambio) {
 
 // 3. Eliminar un producto por completo
 function eliminarDelCarrito(id) {
-    carrito = carrito.filter(item => item.id !== id);
+    carrito = carrito.filter(item => String(item.id) !== String(id));
     guardarYActualizar();
 }
 
@@ -217,7 +223,9 @@ function actualizarVistaCarrito() {
     const totalSpan = document.getElementById('total-carrito');
 
     const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-    contador.textContent = totalItems;
+    if (contador) contador.textContent = totalItems;
+
+    if (!contenedor || !totalSpan) return;
 
     if (carrito.length === 0) {
         contenedor.innerHTML = '<p style="color: #888; text-align: center;">El carrito está vacío</p>';
@@ -227,17 +235,18 @@ function actualizarVistaCarrito() {
 
     let html = '';
     carrito.forEach(item => {
+        const idSeguro = String(item.id).replace(/'/g, "\\'");
         html += `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
                 <div>
                     <h4 style="margin: 0 0 5px 0; font-size: 14px;">${item.nombre}</h4>
-                    <span style="font-size: 12px; color: #aaa;">$${item.precio.toFixed(2)} x ${item.cantidad}</span>
+                    <span style="font-size: 12px; color: #aaa;">$${Number(item.precio).toFixed(2)} x ${item.cantidad}</span>
                 </div>
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button onclick="cambiarCantidad(${item.id}, -1)" style="background: #444; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer;">-</button>
+                    <button type="button" onclick="cambiarCantidad('${idSeguro}', -1)" style="background: #444; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer;">-</button>
                     <span>${item.cantidad}</span>
-                    <button onclick="cambiarCantidad(${item.id}, 1)" style="background: #444; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer;">+</button>
-                    <button onclick="eliminarDelCarrito(${item.id})" style="background: #c62828; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer; margin-left: 5px;">🗑</button>
+                    <button type="button" onclick="cambiarCantidad('${idSeguro}', 1)" style="background: #444; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer;">+</button>
+                    <button type="button" onclick="eliminarDelCarrito('${idSeguro}')" style="background: #c62828; color: white; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer; margin-left: 5px;">🗑</button>
                 </div>
             </div>
         `;
@@ -246,6 +255,12 @@ function actualizarVistaCarrito() {
     contenedor.innerHTML = html;
     totalSpan.textContent = `$${calcularTotal().toFixed(2)}`;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof actualizarVistaCarrito === 'function') {
+        actualizarVistaCarrito();
+    }
+});
 
 // Abrir y cerrar el simulador de pago
 function abrirSimuladorPago() {
